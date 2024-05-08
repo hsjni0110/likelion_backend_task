@@ -31,6 +31,15 @@ public class PostService {
         post.update(title,content, createDate);
     }
 
+    public void delete(Long postId, Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundException("게시글 정보가 없습니다."));
+        post.validateMember(member);
+        postRepository.delete(post);
+    }
+
     public PostResponse getPostById(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException("게시글 정보가 없습니다."));
