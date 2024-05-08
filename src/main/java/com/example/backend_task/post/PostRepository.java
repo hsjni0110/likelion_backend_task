@@ -1,5 +1,7 @@
 package com.example.backend_task.post;
 
+import com.example.backend_task.member.Member;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -15,5 +17,9 @@ public class PostRepository {
         post.setId(id);
         posts.put(id++, post);
         return post;
+    }
+
+    public Optional<Post> findById(Long id) {
+        return Optional.ofNullable(posts.get(id));
     }
 }
