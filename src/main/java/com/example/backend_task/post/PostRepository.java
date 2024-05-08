@@ -19,6 +19,8 @@ public class PostRepository {
         return post;
     }
 
+    public void delete(Post post) { posts.remove(post.getId()); }
+
     public Optional<Post> findById(Long id) {
         return Optional.ofNullable(posts.get(id));
     }

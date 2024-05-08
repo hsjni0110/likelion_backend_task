@@ -33,6 +33,14 @@ public class PostController {
         postService.update(request.title(), request.content(),postId, memberId, request.date());
     }
 
+    //게시글 삭제
+    @DeleteMapping("/posts/{postId}")
+    public void delete(
+            @Auth Long userId,
+            @PathVariable("postId") Long postId
+    ){
+        postService.delete(postId,userId);
+    }
     @GetMapping("/posts/{postId}")
     public ResponseEntity<PostResponse> getPost(
             @PathVariable Long postId
