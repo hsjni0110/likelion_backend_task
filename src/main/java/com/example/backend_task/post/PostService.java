@@ -17,7 +17,14 @@ public class PostService {
 
         Member member = memberRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("사용자 정보가 없습니다."));
-        Post post = new Post(title, content, member);
+        Post post = Post.of(title, content, member);
         return postRepository.save(post).getId();
+    }
+
+    public PostResponse getPostById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundException("게시글 정보가 없습니다."));
+        return new PostResponse(post.getId(), post.getTitle(), post.getContent(),
+                post.getMember().getId(), post.getCreatedDate());
     }
 }
