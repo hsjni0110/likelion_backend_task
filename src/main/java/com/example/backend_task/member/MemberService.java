@@ -1,5 +1,6 @@
 package com.example.backend_task.member;
 
+import backend.likelion.todos.common.UnAuthorizedException;
 import com.example.backend_task.common.ConflictException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,12 @@ public class MemberService {
         Member member = new Member(username, password, name);
         return memberRepository.save(member)
                 .getId();
+    }
+
+    public Long login(String username, String password) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new UnAuthorizedException("존재하지 않는 아이디입니다."));
+        member.login(password);
+        return member.getId();
     }
 }
