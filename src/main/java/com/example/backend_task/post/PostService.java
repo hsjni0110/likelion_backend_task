@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +44,13 @@ public class PostService {
         post.validateMember(member);
         postRepository.delete(post);
     }
+    public List<PostResponse> getPosts() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream()
+                .map(post -> new PostResponse(post.getId(), post.getTitle(), post.getContent(),
+                        post.getMember().getId(), post.getCreatedDate()))
+                .toList();
+    }
 
     public PostResponse getPostById(Long postId) {
         Post post = postRepository.findById(postId)
@@ -46,5 +58,6 @@ public class PostService {
         return new PostResponse(post.getId(), post.getTitle(), post.getContent(),
                 post.getMember().getId(), post.getCreatedDate());
     }
+
 
 }

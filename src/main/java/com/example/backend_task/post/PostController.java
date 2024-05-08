@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,6 +41,12 @@ public class PostController {
             @PathVariable("postId") Long postId
     ){
         postService.delete(postId,userId);
+    }
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostResponse>> getPostList(
+    ) {
+        List<PostResponse> post = postService.getPosts();
+        return ResponseEntity.ok(post);
     }
     @GetMapping("/posts/{postId}")
     public ResponseEntity<PostResponse> getPost(
