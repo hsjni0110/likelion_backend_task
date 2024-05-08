@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,7 +30,7 @@ public class PostController {
             @PathVariable("postId") Long postId,
             @RequestBody PostUpdateRequest request
     ) {
-        postService.update(postId, memberId, request.title(), request.content());
+        postService.update(request.title(), request.content(),postId, memberId, request.date());
     }
 
     @GetMapping("/posts/{postId}")
