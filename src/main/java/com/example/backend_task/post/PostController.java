@@ -3,11 +3,7 @@ package com.example.backend_task.post;
 import com.example.backend_task.auth.Auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -25,6 +21,15 @@ public class PostController {
     ) {
         Long PostId = postService.save(request.title(), request.content(), userId);
         return ResponseEntity.created(URI.create("/posts/" + PostId)).build();
+    }
+    // 게시글 수정
+    @PutMapping("/posts/{postId}")
+    public void update(
+            @Auth Long memberId,
+            @PathVariable("postId") Long postId,
+            @RequestBody PostUpdateRequest request
+    ) {
+        postService.update(postId, memberId, request.title(), request.content());
     }
 
     @GetMapping("/posts/{postId}")
